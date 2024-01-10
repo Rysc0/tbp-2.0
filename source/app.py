@@ -6,8 +6,8 @@ def main():
     root = tk.Tk()
 
     def on_login_success():
-        # login_screen.root.destroy()  # Close the login window
-        main_screen = MainScreen(root)
+        login_screen.root.destroy()  # Close the login window
+        main_screen = MainScreen()
 
     login_screen = LoginScreen(root, on_login_success)
     root.mainloop()
