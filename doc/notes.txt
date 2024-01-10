@@ -1,0 +1,29 @@
+when installing pgAdmin you need to set postgres user password to be able to connect to the local db
+to do so login to the psql with
+
+sudo -u postgres psql
+
+then do this:
+	\password
+
+enter new password
+
+go back to pgAdmin and connect with that password
+
+
+
+
+BACKUP
+
+backup can be made from pgAdmin
+	right click on database -> BACKUP
+
+the same thing can be made manually with pg_dump
+	pg_dump -h localhost -p 5432 -U postgres -W -d postgres -f /home/rysco/tbp/db/dump.sql
+
+this can be run in bash, -W asks for postgres user password
+
+
+
+install tkinter
+	sudo apt install python3-tk
