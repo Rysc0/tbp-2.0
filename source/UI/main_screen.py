@@ -54,11 +54,12 @@ class MainScreen:
         self.EntryName = tk.Entry(self.WorkLogLabelFrame, state="disabled")
         self.EntryName.grid()
 
-        # TODO: datum 
-        self.TrosakLabel = tk.Label(self.WorkLogLabelFrame, text='Datum:')
-        self.TrosakLabel.grid()
+ 
+        self.DatumLabel = tk.Label(self.WorkLogLabelFrame, text='Datum:')
+        self.DatumLabel.grid()
         self.calendar = DateEntry(self.WorkLogLabelFrame, selectmode='day', date_pattern='dd/MM/yyyy')
         self.calendar.grid()
+
 
         self.StatusLabel = tk.Label(self.WorkLogLabelFrame, text="Status:")
         self.StatusLabel.grid()
@@ -75,20 +76,21 @@ class MainScreen:
         self.KilometrazaLabel = tk.Label(self.WorkLogLabelFrame, text="Kilometraža:")
         self.KilometrazaLabel.grid()
         self.Distance = ttk.Spinbox(self.WorkLogLabelFrame, from_=0, to=1000, increment=1)
-        self.Distance.grid()
-
-        # TODO: Trošak
+        self.Distance.grid()       
 
 
         self.DnevnikLabel = tk.Label(self.WorkLogLabelFrame, text='Dnevnik')
-        self.DnevnikLabel.grid(row=0, column=1)
-        self.Dnevnik = tk.Text(self.WorkLogLabelFrame, height=5, width=30)
-        self.Dnevnik.grid(row=1, column=1)
+        self.DnevnikLabel.grid(row=10, column=0)
+        self.Dnevnik = tk.Text(self.WorkLogLabelFrame, height=8, width=50)
+        self.Dnevnik.grid(row=11, column=0)
 
         # ---------------------------------------------------------------------#
+        
+        # prazno vert
+        tk.Label(self.WorkLogLabelFrame).grid(column=1)
 
         self.TrosakFrame = tk.LabelFrame(self.WorkLogLabelFrame, border=5, relief=tk.RIDGE, text='Trošak')
-        self.TrosakFrame.grid(row=3, column=1)
+        self.TrosakFrame.grid(row=0, column=2, rowspan=70)
 
 
         # spinbox
@@ -134,7 +136,7 @@ class MainScreen:
         # listbox -> kreirani troškovi 
         self.ListaTroskovaLabel = tk.Label(self.TrosakFrame, text='Troškovi:')
         self.ListaTroskovaLabel.grid(row=0, column=3)
-        self.TrosakListBox = tk.Listbox(self.TrosakFrame, width=20, height=10)
+        self.TrosakListBox = tk.Listbox(self.TrosakFrame, width=20, height=20)
         self.TrosakListBox.grid(row=1, column=3, rowspan=10)
 
         # ---------------------------------------------------------------------#
