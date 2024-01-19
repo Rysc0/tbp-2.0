@@ -4,12 +4,15 @@ from tkcalendar import DateEntry
 from dbUtil import data
 
 class MainScreen:
-    def __init__(self):
+    def __init__(self, username):
         self.root = tk.Tk()
         self.root.title("Main Screen")
 
+        self.username = username
+
+
         # TODO: Take data from login and pass it here
-        employee_data = (data.db_getEmployeesData(Name='John Doe'))
+        employee_data = (data.db_getUser(self.username))
         # ---------------------------------------------------------------------#
         self.EmployeeFrame = tk.Frame(self.root, border=5, relief=tk.RIDGE)
         self.EmployeeFrame.grid(row=0, column=0)
@@ -51,7 +54,7 @@ class MainScreen:
 
         self.NameLabel = tk.Label(self.WorkLogLabelFrame, text="Ime i prezime:")
         self.NameLabel.grid()
-        self.EntryName = tk.Label(self.WorkLogLabelFrame, state="disabled", text="John Doe")
+        self.EntryName = tk.Label(self.WorkLogLabelFrame, state="disabled", text=self.username)
         self.EntryName.grid()
 
  

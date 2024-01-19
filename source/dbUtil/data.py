@@ -18,12 +18,16 @@ def db_executeQuery(query, fetchAll = False):
 
     if fetchAll:
         result = cursor.fetchall()
+        result = convertToList(result)
     
     else:
         result = cursor.fetchone()
+        if result == None:
+            return None
+        result = list(result)
     
     db_close(connect)
-    result = convertToList(result)
+
     return result
 
 
@@ -42,6 +46,18 @@ def convertToList(inputList):
         return new_list
 
 
+def login(user, password):
+    auth = '''SELECT "Ime i prezime" FROM public."Zaposlenik"
+    WHERE "Ime i prezime" = '{}' AND "Lozinka" = '{}';'''.format(user, password)
+    data = db_executeQuery(auth)
+    
+    # validate
+    if data is not None and len(data) > 0 and user in data:
+        return True
+
+    return False
+
+
 def db_getEmployeesData():
     querry = 'SELECT * FROM public."Zaposlenik"'
     data = db_executeQuery(query=querry, fetchAll= True)
@@ -53,6 +69,12 @@ def db_getEmployeesData(ID=-1, Name=None):
 where "ID" = {} or "Ime i prezime" LIKE '%{}%';'''.format(ID, Name)
     data = db_executeQuery(query=querry, fetchAll= True)
     print(data)
+    return data
+
+def db_getUser(username):
+    querry = '''SELECT * FROM public."Zaposlenik"
+where "Ime i prezime" LIKE '%{}%';'''.format(username)
+    data = db_executeQuery(querry)
     return data
 
 

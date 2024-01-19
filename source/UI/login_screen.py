@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from dbUtil.data import login
 
 class LoginScreen:
     def __init__(self, root, on_login_success):
@@ -27,8 +28,9 @@ class LoginScreen:
         username = self.entry_username.get()
         password = self.entry_password.get()
 
+        
         # You can implement your own authentication logic here
-        if username == "user" and password == "password":
-            self.on_login_success()
+        if login(username, password):
+            self.on_login_success(username)
         else:
             messagebox.showerror("Login Failed", "Invalid username or password")
