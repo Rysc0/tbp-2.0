@@ -84,6 +84,9 @@ class MainScreen:
         self.Dnevnik = tk.Text(self.WorkLogLabelFrame, height=8, width=50)
         self.Dnevnik.grid(row=11, column=0)
 
+        self.UpisiButton = tk.Button(self.WorkLogLabelFrame, text="Upisi", command=self.on_upisiButton_click, height=1, width=15)
+        self.UpisiButton.grid(row=12, column=0, pady=5)
+
         # ---------------------------------------------------------------------#
         
         # prazno vert
@@ -122,11 +125,11 @@ class MainScreen:
 
         
         # button - dodaj
-        self.DodajTrosakButton = tk.Button(self.TrosakFrame, text="Dodaj", height=1, width=15)
+        self.DodajTrosakButton = tk.Button(self.TrosakFrame, text="Dodaj", command=self.on_dodajButton_click, height=1, width=15)
         self.DodajTrosakButton.grid(pady=10)
 
         # button - ukloni
-        self.UkloniTrosakButton = tk.Button(self.TrosakFrame, text="Ukloni", height=1, width=15)
+        self.UkloniTrosakButton = tk.Button(self.TrosakFrame, text="Ukloni", command=self.on_ukloniButton_click, height=1, width=15)
         self.UkloniTrosakButton.grid()
 
         # prazno vert
@@ -159,7 +162,16 @@ class MainScreen:
     def on_djelatniciButton_click(self):
         messagebox.showinfo("Klikno si")
 
-    def on_search_click(self):
-        # Handle search button click
-        search_text = self.search_var.get()
-        print(f"Searching for: {search_text}")
+    def on_statusButton_click(self):
+        messagebox.showinfo("Klikno si")
+
+    def on_dodajButton_click(self):
+        messagebox.showinfo("Klikno si")
+
+    def on_ukloniButton_click(self):
+        messagebox.showinfo("Klikno si")
+
+    def on_upisiButton_click(self):
+        messagebox.showinfo("Klikno si")
+
+
