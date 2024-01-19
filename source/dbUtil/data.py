@@ -55,3 +55,19 @@ where "ID" = {} or "Ime i prezime" LIKE '%{}%';'''.format(ID, Name)
     print(data)
     return data
 
+
+def getStatuses():
+    status = 'SELECT * FROM public."Status";'
+    data = db_executeQuery(status, True)
+    return data
+
+def getVehicleNames():
+    vehicle = 'SELECT "Marka" FROM public."Vozilo";'
+    data = db_executeQuery(vehicle, True)
+    return data
+
+def getVrstaTroska():
+    expense = 'SELECT * FROM public."Trošak_Vrsta";'
+    data = db_executeQuery(expense, True)
+    return data
+

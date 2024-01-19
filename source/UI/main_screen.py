@@ -51,7 +51,7 @@ class MainScreen:
 
         self.NameLabel = tk.Label(self.WorkLogLabelFrame, text="Ime i prezime:")
         self.NameLabel.grid()
-        self.EntryName = tk.Entry(self.WorkLogLabelFrame, state="disabled")
+        self.EntryName = tk.Label(self.WorkLogLabelFrame, state="disabled", text="John Doe")
         self.EntryName.grid()
 
  
@@ -63,19 +63,22 @@ class MainScreen:
 
         self.StatusLabel = tk.Label(self.WorkLogLabelFrame, text="Status:")
         self.StatusLabel.grid()
-        self.statusComboBox = ttk.Combobox(self.WorkLogLabelFrame)
+        self.statusComboBox = ttk.Combobox(self.WorkLogLabelFrame, state='readonly', values=self.populateStatus())
+        self.statusComboBox.set('Odaberi')
         self.statusComboBox.grid()
 
 
         self.VoziloLabel = tk.Label(self.WorkLogLabelFrame, text="Vozilo:")
         self.VoziloLabel.grid()
-        self.VehicleEntry = tk.Entry(self.WorkLogLabelFrame)
+        self.VehicleEntry = ttk.Combobox(self.WorkLogLabelFrame, state='readonly', values=self.populateVozilo())
+        self.VehicleEntry.set('Odaberi')
         self.VehicleEntry.grid()
 
 
         self.KilometrazaLabel = tk.Label(self.WorkLogLabelFrame, text="Kilometraža:")
         self.KilometrazaLabel.grid()
         self.Distance = ttk.Spinbox(self.WorkLogLabelFrame, from_=0, to=1000, increment=1)
+        self.Distance.set(0)
         self.Distance.grid()       
 
 
@@ -100,6 +103,7 @@ class MainScreen:
         self.IznosLabel = tk.Label(self.TrosakFrame, text="Iznos:")
         self.IznosLabel.grid(row=0)
         self.IznosSpinBox = ttk.Spinbox(self.TrosakFrame, from_=0, to=1000, increment=1)
+        self.IznosSpinBox.set(0)
         self.IznosSpinBox.grid(row=1)
 
 
@@ -120,8 +124,9 @@ class MainScreen:
         # combobox
         self.VrstaTroskaLabel = tk.Label(self.TrosakFrame, text="Vrsta:")
         self.VrstaTroskaLabel.grid()
-        self.statusComboBox = ttk.Combobox(self.TrosakFrame)
-        self.statusComboBox.grid()
+        self.vrstaComboBox = ttk.Combobox(self.TrosakFrame, state='readonly', values=self.populateVrsta())
+        self.vrstaComboBox.set('Odaberi')
+        self.vrstaComboBox.grid()
 
         
         # button - dodaj
@@ -150,6 +155,25 @@ class MainScreen:
 
         self.WorkLogLabelFrame.grid_columnconfigure(3, weight=1)
 
+    
+    def populateStatus(self):
+        statuses = data.getStatuses()
+        statuses = [y[1] for y in statuses]
+        return statuses
+    
+    def populateVozilo(self):
+        vozila = data.getVehicleNames()
+        vozila = [y[0] for y in vozila]
+        return vozila
+
+    def populateVrsta(self):
+        vrste = data.getVrstaTroska()
+        vrste = [y[1] for y in vrste]
+        return vrste
+
+
+    
+    
     def on_change_password(self):
         messagebox.showinfo("Change pass", "Change pass clicked")
 
