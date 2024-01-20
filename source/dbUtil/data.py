@@ -25,7 +25,7 @@ def db_executeQuery(query, fetchAll = False):
         if result == None:
             return None
         result = list(result)
-    
+ 
     db_close(connect)
 
     return result
@@ -77,6 +77,11 @@ where "Ime i prezime" LIKE '%{}%';'''.format(username)
     data = db_executeQuery(querry)
     return data
 
+def getRadnoMjesto(id):
+    query = '''SELECT * FROM public."Radno mjesto" 
+where "ID" = {};'''.format(id)
+    data = db_executeQuery(query)
+    return data[1]
 
 def getStatuses():
     status = 'SELECT * FROM public."Status";'

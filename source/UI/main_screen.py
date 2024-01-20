@@ -26,7 +26,7 @@ class MainScreen:
         self.kontakt = tk.Label(self.EmployeeFrame, text="Kontakt: \n{}".format(employee_data[2]))
         self.kontakt.grid(row=2, column=0)
 
-        self.radno_mjesto = tk.Label(self.EmployeeFrame, text="Radno mjesto: \n{}".format(employee_data[9]))
+        self.radno_mjesto = tk.Label(self.EmployeeFrame, text="Radno mjesto: \n{}".format(data.getRadnoMjesto(employee_data[9]), extract=True))
         self.radno_mjesto.grid(row=3, column=0)
 
         # TODO: Format radno vrijeme approprietly
