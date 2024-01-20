@@ -2,6 +2,11 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
 from dbUtil import data
+from UI.car_screen import CarScreen
+from UI.djelatnici_screen import DjelatniciScreen
+from UI.isplate_screen import IsplateScreen
+from UI.evidencija_screen import EvidencijaScreen
+from UI.changePass import ChangePassScreen
 
 class MainScreen:
     def __init__(self, username):
@@ -181,19 +186,24 @@ class MainScreen:
     
     
     def on_change_password(self):
-        messagebox.showinfo("Change pass", "Change pass clicked")
+        changePass = ChangePassScreen()
+        changePass.root.mainloop()
+        # messagebox.showinfo("Change pass", "Change pass clicked")
 
     def on_carButton_click(self):
-        messagebox.showinfo("Car", "Car clicked")
+        car_screen = CarScreen()
+        car_screen.root.mainloop()
+        # messagebox.showinfo("Car", "Car clicked")
 
     def on_isplateButton_click(self):
-        messagebox.showinfo("Isplate", "Isplate clicked")
+        isplate_screen = IsplateScreen()
+        isplate_screen.root.mainloop()
+        # messagebox.showinfo("Isplate", "Isplate clicked")
 
     def on_djelatniciButton_click(self):
-        messagebox.showinfo("Klikno si")
-
-    def on_statusButton_click(self):
-        messagebox.showinfo("Klikno si")
+        djelatnici_screen = DjelatniciScreen()
+        djelatnici_screen.root.mainloop()
+        # messagebox.showinfo("Klikno si")
 
     def on_dodajButton_click(self):
         messagebox.showinfo("Klikno si")
@@ -205,6 +215,8 @@ class MainScreen:
         messagebox.showinfo("Klikno si")
 
     def on_evidencijaButton_click(self):
-        messagebox.showinfo("Klikno si")
+        evidencija_screen = EvidencijaScreen()
+        evidencija_screen.root.mainloop()
+        # messagebox.showinfo("Klikno si")
 
 
