@@ -104,6 +104,11 @@ def getStatuses():
     data = db_executeQuery(status, True)
     return data
 
+def getVehicles():
+    query = '''SELECT * FROM public."Vozilo";'''
+    data = db_executeQuery(query, True)
+    return data
+
 def getVehicleNames():
     vehicle = 'SELECT "Marka" FROM public."Vozilo";'
     data = db_executeQuery(vehicle, True)
