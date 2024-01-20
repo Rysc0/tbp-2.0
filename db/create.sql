@@ -80,21 +80,6 @@ CREATE TABLE IF NOT EXISTS "Zaposlenik"
 );
 
 
-CREATE TABLE IF NOT EXISTS "Trošak"
-(
-    "ID" serial NOT NULL,
-    "Opis" text,
-    "Iznos" double precision NOT NULL,
-    "Datum" date NOT NULL,
-    "Vrsta" integer NOT NULL,
-    CONSTRAINT "Trošak_pkey" PRIMARY KEY ("ID"),
-    CONSTRAINT "Vrsta" FOREIGN KEY ("Vrsta")
-        REFERENCES "Trošak_Vrsta" ("ID") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-);
-
 CREATE TABLE IF NOT EXISTS "Isplata"
 (
     "ID" serial NOT NULL,
@@ -122,16 +107,10 @@ CREATE TABLE IF NOT EXISTS "WorkLog"
     "Vozilo" integer,
     "Kilometraža" integer,
     "Dnevnik" text COLLATE pg_catalog."default",
-    "Trošak" integer,
     "ID" serial NOT NULL,
     CONSTRAINT "WorkLog_pkey" PRIMARY KEY ("ID"),
     CONSTRAINT "StatusiD" FOREIGN KEY ("Status")
         REFERENCES "Status" ("ID") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID,
-    CONSTRAINT "TrošakID" FOREIGN KEY ("Trošak")
-        REFERENCES "Trošak" ("ID") MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
         NOT VALID,
@@ -141,6 +120,25 @@ CREATE TABLE IF NOT EXISTS "WorkLog"
         ON DELETE NO ACTION
 );
 
+
+CREATE TABLE IF NOT EXISTS public."Trošak"
+(
+    "ID" serial NOT NULL,
+    "Opis" text COLLATE pg_catalog."default",
+    "Iznos" double precision NOT NULL,
+    "Datum" date NOT NULL,
+    "Vrsta" integer NOT NULL,
+    "WorkLogID" integer NOT NULL,
+    CONSTRAINT "Trošak_pkey" PRIMARY KEY ("ID"),
+    CONSTRAINT "VrstaTroška" FOREIGN KEY ("Vrsta")
+        REFERENCES public."Trošak_Vrsta" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "WorkLogID" FOREIGN KEY ("WorkLogID")
+        REFERENCES public."WorkLog" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
 
 
 INSERT INTO "Radno mjesto" ("Radno mjesto") VALUES
@@ -184,12 +182,19 @@ INSERT INTO "Trošak_Vrsta" ("Naziv") VALUES
     ('Utilities'),
     ('Equipment Maintenance');
 
-INSERT INTO "Trošak" ("Opis", "Iznos", "Datum", "Vrsta") VALUES
-    ('Office Supplies', 150.00, '2024-01-10', 1),
-    ('Business Trip Expenses', 500.00, '2024-01-11', 2),
-    ('Training Workshop Fee', 200.00, '2024-01-12', 3),
-    ('Utilities Payment', 100.00, '2024-01-13', 4),
-    ('Equipment Maintenance', 300.00, '2024-01-14', 5);
+INSERT INTO "WorkLog" ("ZaposlenikID", "Datum", "Status", "Vozilo", "Kilometraža", "Dnevnik") VALUES
+    (1, '2024-01-10', 1, 1, 50, 'Working on project A'),
+    (2, '2024-01-11', 2, 2, 75, 'Attending training session'),
+    (3, '2024-01-12', 3, NULL, NULL, 'On leave due to personal reasons'),
+    (4, '2024-01-13', 1, 3, 60, 'Meeting with clients'),
+    (5, '2024-01-14', 4, NULL, NULL, 'Waiting for project approval');
+
+INSERT INTO "Trošak" ("Opis", "Iznos", "Datum", "Vrsta", "WorkLogID") VALUES
+    ('Office Supplies', 150.00, '2024-01-10', 1, 1),
+    ('Business Trip Expenses', 500.00, '2024-01-11', 2, 2),
+    ('Training Workshop Fee', 200.00, '2024-01-12', 3, 3),
+    ('Utilities Payment', 100.00, '2024-01-13', 4, 4),
+    ('Equipment Maintenance', 300.00, '2024-01-14', 5, 5);
 
 INSERT INTO "Zaposlenik" ("Ime i prezime", "Kontakt", "Plaća", "Lozinka", "Email", "Radno vrijeme pocetak", "Radno vrijeme kraj", "Vozilo", "Radno mjesto", "Zaposlen") VALUES
     ('John Doe', '091-234-5678', 1, 'password1', 'john.doe@example.com', '08:00:00', '17:00:00', 1, 1, '2024-01-01'),
@@ -203,12 +208,7 @@ INSERT INTO "Zaposlenik" ("Ime i prezime", "Kontakt", "Plaća", "Lozinka", "Emai
     ('Kevin Brown', '099-012-3456', 3, 'password9', 'kevin.brown@example.com', '08:00:00', '17:00:00', NULL, 4, '2024-01-09'),
     ('Amanda Johnson', '090-123-4567', 5, 'password10', 'amanda.johnson@example.com', '08:30:00', '17:30:00', NULL, 5, '2024-01-10');
 
-INSERT INTO "WorkLog" ("ZaposlenikID", "Datum", "Status", "Vozilo", "Kilometraža", "Dnevnik", "Trošak") VALUES
-    (1, '2024-01-10', 1, 1, 50, 'Working on project A', 1),
-    (2, '2024-01-11', 2, 2, 75, 'Attending training session', 3),
-    (3, '2024-01-12', 3, NULL, NULL, 'On leave due to personal reasons', NULL),
-    (4, '2024-01-13', 1, 3, 60, 'Meeting with clients', 2),
-    (5, '2024-01-14', 4, NULL, NULL, 'Waiting for project approval', NULL);
+
 
 INSERT INTO "Isplata" ("ZaposlenikID", "Datum", "Plaća") VALUES
     (1, '2024-01-01 12:00:00', 1),
