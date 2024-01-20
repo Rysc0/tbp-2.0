@@ -17,25 +17,25 @@ class MainScreen:
 
 
         # TODO: Take data from login and pass it here
-        employee_data = (data.db_getUser(self.username))
+        self.employee_data = (data.db_getUser(self.username))
         # ---------------------------------------------------------------------#
         self.EmployeeFrame = tk.Frame(self.root, border=5, relief=tk.RIDGE)
         self.EmployeeFrame.grid(row=0, column=0)
         
-        self.ime_prezime = tk.Label(self.EmployeeFrame, text="Ime i prezime: \n{}".format(employee_data[1]))
+        self.ime_prezime = tk.Label(self.EmployeeFrame, text="Ime i prezime: \n{}".format(self.employee_data[1]))
         self.ime_prezime.grid(row=0, column=0)
         
-        self.email = tk.Label(self.EmployeeFrame, text="Email: \n{}".format(employee_data[5]))
+        self.email = tk.Label(self.EmployeeFrame, text="Email: \n{}".format(self.employee_data[5]))
         self.email.grid(row=1, column=0)
 
-        self.kontakt = tk.Label(self.EmployeeFrame, text="Kontakt: \n{}".format(employee_data[2]))
+        self.kontakt = tk.Label(self.EmployeeFrame, text="Kontakt: \n{}".format(self.employee_data[2]))
         self.kontakt.grid(row=2, column=0)
 
-        self.radno_mjesto = tk.Label(self.EmployeeFrame, text="Radno mjesto: \n{}".format(data.getRadnoMjesto(employee_data[9]), extract=True))
+        self.radno_mjesto = tk.Label(self.EmployeeFrame, text="Radno mjesto: \n{}".format(data.getRadnoMjesto(self.employee_data[9]), extract=True))
         self.radno_mjesto.grid(row=3, column=0)
 
         # TODO: Format radno vrijeme approprietly
-        self.radno_vrijeme = tk.Label(self.EmployeeFrame, text="Radno vrijeme: \n{}".format(str(employee_data[6])[:-3] + ' - ' + str(employee_data[7])[:-3]))
+        self.radno_vrijeme = tk.Label(self.EmployeeFrame, text="Radno vrijeme: \n{}".format(str(self.employee_data[6])[:-3] + ' - ' + str(self.employee_data[7])[:-3]))
         self.radno_vrijeme.grid(row=4, column=0)
 
 
@@ -196,7 +196,7 @@ class MainScreen:
         # messagebox.showinfo("Car", "Car clicked")
 
     def on_isplateButton_click(self):
-        isplate_screen = IsplateScreen()
+        isplate_screen = IsplateScreen(employeeID=self.employee_data[0])
         isplate_screen.root.mainloop()
         # messagebox.showinfo("Isplate", "Isplate clicked")
 

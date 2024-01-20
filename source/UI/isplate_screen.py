@@ -1,14 +1,15 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from dbUtil import data
+from dbUtil import data as db
 
 class IsplateScreen:
-    def __init__(self):
+    def __init__(self, employeeID):
         self.root = tk.Tk()
         self.root.title("Isplate Screen")
+        self.employeeID = employeeID
 
         # Create a Treeview widget
-        columns = ("ID", "Name", "Age")
+        columns = ("ID", "Ime i prezime", "Datum", "Plaća")
         self.tree = ttk.Treeview(self.root, columns=columns, show="headings")
 
         # Set column headings
@@ -17,11 +18,15 @@ class IsplateScreen:
             self.tree.column(col, width=100)  # Adjust the width as needed
 
         # Insert sample data into the table
-        data = [
-            (1, "John Doe", 30),
-            (2, "Jane Doe", 25),
-            (3, "Bob Smith", 35)
-        ]
+        record = db.getIsplataForEmployee(self.employeeID)
+        ime = db.db_getEmployeesData(ID=record[1])
+        record[1] = ime[1]
+
+        # get placa
+        paycheck = db.getPayCheck(record[3])
+        record[3] = paycheck[1]
+
+        data = [tuple(record)]
 
         for item in data:
             self.tree.insert("", "end", values=item)

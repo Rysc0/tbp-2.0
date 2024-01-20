@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from dbUtil import data
+from dbUtil import data as db
 
 class DjelatniciScreen:
     def __init__(self):
@@ -8,7 +8,9 @@ class DjelatniciScreen:
         self.root.title("Djelatnici Screen")
 
         # Create a Treeview widget
-        columns = ("ID", "Name", "Age")
+        columns = ("ID", "Ime i prezime", "Kontakt", "Plaća", 
+                   "Lozinka", "Email", "Radno vrijeme P", "Radno vrijeme K", 
+                   "Vozilo", "Radno mjesto", "Zaposlen")
         self.tree = ttk.Treeview(self.root, columns=columns, show="headings")
 
         # Set column headings
@@ -17,11 +19,7 @@ class DjelatniciScreen:
             self.tree.column(col, width=100)  # Adjust the width as needed
 
         # Insert sample data into the table
-        data = [
-            (1, "John Doe", 30),
-            (2, "Jane Doe", 25),
-            (3, "Bob Smith", 35)
-        ]
+        data = db.db_getAllEmployeesData()
 
         for item in data:
             self.tree.insert("", "end", values=item)

@@ -30,9 +30,24 @@ def db_executeQuery(query, fetchAll = False):
 
     return result
 
+def db_fetch(query):
+    connect = db_connect()
+    cursor = connect.cursor()
+    cursor.execute(query=query)
 
-def convertToList(inputList):
+    result = list(cursor.fetchall())
+    db_close(connect)
+
+    return result
+
+
+
+def convertToList(inputList, full = False):
     lenght = len(inputList)
+    
+    if full:
+        new_list = list(inputList)
+        return new_list
 
     if lenght > 1:
         new_list = []
@@ -45,6 +60,7 @@ def convertToList(inputList):
         new_list = list(inputList[0])
         return new_list
 
+    
 
 def login(user, password):
     auth = '''SELECT "Ime i prezime" FROM public."Zaposlenik"
@@ -58,9 +74,9 @@ def login(user, password):
     return False
 
 
-def db_getEmployeesData():
-    querry = 'SELECT * FROM public."Zaposlenik"'
-    data = db_executeQuery(query=querry, fetchAll= True)
+def db_getAllEmployeesData():
+    querry = 'SELECT * FROM public."Zaposlenik"'      
+    data = db_fetch(query=querry)
     print(data)
     return data
 
@@ -96,5 +112,17 @@ def getVehicleNames():
 def getVrstaTroska():
     expense = 'SELECT * FROM public."Trošak_Vrsta";'
     data = db_executeQuery(expense, True)
+    return data
+
+def getIsplataForEmployee(employeeID):
+    query = '''SELECT * FROM public."Isplata"
+WHERE "ZaposlenikID" = {};'''.format(employeeID)
+    data = db_executeQuery(query, True)
+    return data
+
+def getPayCheck(paycheckID):
+    query = '''SELECT * FROM public."Plaća"
+WHERE "ID" = {};'''.format(paycheckID)
+    data = db_executeQuery(query)
     return data
 
