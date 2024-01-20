@@ -93,6 +93,9 @@ class MainScreen:
         self.UpisiButton = tk.Button(self.WorkLogLabelFrame, text="Upisi", command=self.on_upisiButton_click, height=1, width=15)
         self.UpisiButton.grid(row=12, column=0, pady=5)
 
+        self.EvidencijaButton = tk.Button(self.WorkLogLabelFrame, text="Evidencija", command=self.on_evidencijaButton_click, height=1, width=15)
+        self.EvidencijaButton.grid()
+
         # ---------------------------------------------------------------------#
         
         # prazno vert
@@ -199,6 +202,9 @@ class MainScreen:
         messagebox.showinfo("Klikno si")
 
     def on_upisiButton_click(self):
+        messagebox.showinfo("Klikno si")
+
+    def on_evidencijaButton_click(self):
         messagebox.showinfo("Klikno si")
 
 
