@@ -131,3 +131,9 @@ WHERE "ID" = {};'''.format(paycheckID)
     data = db_executeQuery(query)
     return data
 
+def getWorkLogs(employeeID):
+    query = '''SELECT * FROM public."WorkLog"
+WHERE "ZaposlenikID" = {};'''.format(employeeID)
+    data = db_executeQuery(query, True)
+    return data
+

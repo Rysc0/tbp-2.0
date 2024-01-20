@@ -1,15 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
-from dbUtil import data
+from dbUtil import data as db
 
 class EvidencijaScreen:
-    def __init__(self):
+    def __init__(self, employee):
         self.root = tk.Tk()
         self.root.title("Evidencija Screen")
-
+        self.employee = employee
 
         # Create a Treeview widget
-        columns = ("ID", "Name", "Age")
+        columns = ("ZaposlenikID", "Datum", "Status", "Vozilo", "Kilometraža", "Dnevnik", "Trošak", "ID")
         self.tree = ttk.Treeview(self.root, columns=columns, show="headings")
 
         # Set column headings
@@ -18,11 +18,12 @@ class EvidencijaScreen:
             self.tree.column(col, width=100)  # Adjust the width as needed
 
         # Insert sample data into the table
-        data = [
-            (1, "John Doe", 30),
-            (2, "Jane Doe", 25),
-            (3, "Bob Smith", 35)
-        ]
+        records = db.getWorkLogs(self.employee)
+
+        
+        data = [tuple(records)]
+
+        
 
         for item in data:
             self.tree.insert("", "end", values=item)

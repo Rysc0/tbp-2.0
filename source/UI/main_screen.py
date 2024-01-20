@@ -215,7 +215,7 @@ class MainScreen:
         messagebox.showinfo("Klikno si")
 
     def on_evidencijaButton_click(self):
-        evidencija_screen = EvidencijaScreen()
+        evidencija_screen = EvidencijaScreen(self.employee_data[0])
         evidencija_screen.root.mainloop()
         # messagebox.showinfo("Klikno si")
 
