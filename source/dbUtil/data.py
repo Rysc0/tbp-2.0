@@ -104,6 +104,12 @@ def getStatuses():
     data = db_executeQuery(status, True)
     return data
 
+def getStatusID(status):
+    query = '''SELECT "ID" FROM public."Status"
+WHERE "Status" = '{}';'''.format(status)
+    data = db_executeQuery(query)
+    return data
+
 def getVehicles():
     query = '''SELECT * FROM public."Vozilo";'''
     data = db_executeQuery(query, True)
@@ -114,9 +120,21 @@ def getVehicleNames():
     data = db_executeQuery(vehicle, True)
     return data
 
+def getVehicleID(name):
+    query = '''SELECT "ID" FROM public."Vozilo"
+WHERE "Marka" = '{}';'''.format(name)
+    data = db_executeQuery(query)
+    return data
+
 def getVrstaTroska():
     expense = 'SELECT * FROM public."Trošak_Vrsta";'
     data = db_executeQuery(expense, True)
+    return data
+
+def getVrstaTroskaID(trosak):
+    query = '''SELECT "ID" FROM public."Trošak_Vrsta"
+WHERE "Naziv" = '{}';'''.format(trosak)
+    data = db_executeQuery(query)
     return data
 
 def getIsplataForEmployee(employeeID):
@@ -136,4 +154,13 @@ def getWorkLogs(employeeID):
 WHERE "ZaposlenikID" = {};'''.format(employeeID)
     data = db_executeQuery(query, True)
     return data
+
+def createWorkLog(employeeID, employeeName, date, status, 
+                  vehicle, kilometraza, dnevnik):
+    print("id")
+    id = ""
+    return id
+
+def createTrosak(iznos, datum, opis, vrsta, worklogID):
+    return
 

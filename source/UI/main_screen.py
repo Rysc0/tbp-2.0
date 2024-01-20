@@ -121,8 +121,8 @@ class MainScreen:
         # datum
         self.TrosakDatumLabel = tk.Label(self.TrosakFrame, text='Datum:')
         self.TrosakDatumLabel.grid()
-        self.calendar = DateEntry(self.TrosakFrame, selectmode='day', date_pattern='dd/MM/yyyy')
-        self.calendar.grid()
+        self.Trcalendar = DateEntry(self.TrosakFrame, selectmode='day', date_pattern='dd/MM/yyyy')
+        self.Trcalendar.grid()
 
 
         # Text
@@ -212,7 +212,45 @@ class MainScreen:
         messagebox.showinfo("Klikno si")
 
     def on_upisiButton_click(self):
-        messagebox.showinfo("Klikno si")
+        # employeeID
+        
+        # ime i prezime
+
+        # datum
+        selected_date = self.calendar.get_date()
+        # status
+        selected_status = self.statusComboBox.get()
+        statusID = data.getStatusID(selected_status)
+        # vozilo
+        selected_vehicle = self.VehicleEntry.get()
+        vehicleID = data.getVehicleID(selected_vehicle)
+        # kilometraža
+        try:
+            selected_distance = self.Distance.get()
+        except:
+            selected_distance = None
+        # Dnevnik
+        journal = self.Dnevnik.get('1.0','end-1c')
+        # Trošak
+
+        # iznos
+        iznos = self.IznosSpinBox.get()
+        
+        # datum
+        datum = self.Trcalendar.get_date()
+    
+        # opis
+        opis = self.OpisText.get('1.0','end-1c')
+        # vrsta
+        selected_vrsta = self.vrstaComboBox.get()
+        vrsta_id = data.getVrstaTroskaID(selected_vrsta)
+        # troškovi
+        created_worklog_id = data.createWorkLog(employeeID=self.employee_data[0], employeeName=self.employee_data[1],
+                           date=selected_date, status=statusID, vehicle=vehicleID,
+                           kilometraza=selected_distance, dnevnik=journal)
+        data.createTrosak(iznos=iznos, datum=datum, opis=opis, 
+                          vrsta=vrsta_id, worklogID=created_worklog_id)
+        return
 
     def on_evidencijaButton_click(self):
         evidencija_screen = EvidencijaScreen(self.employee_data[0])
