@@ -16,7 +16,7 @@ Pod pretpostavkom da je postgres instaliran pokrenuti skriptu:
 Nakon nje pokrenuti: 
 - db_execute_script.py
 
-*Ako se skripte ne izvrše uspješno možda je potrebno promijeniti postavke za spajanje na bazu, najvjerovatnije lozinku za postgres user-a.
+**Ako se skripte ne izvrše uspješno možda je potrebno promijeniti postavke za spajanje na bazu, najvjerovatnije lozinku za postgres user-a.**
 
 Nakon uspješnog kreiranja baze podataka aplikacija se pokreće izvršavanjem skripte 
 - app.py
