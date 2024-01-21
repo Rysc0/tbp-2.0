@@ -31,6 +31,13 @@ DROP TRIGGER IF EXISTS trg_update_registration_dates ON "Vozilo";
 -- Drop the trigger function
 DROP FUNCTION IF EXISTS update_registration_dates();
 
+-- Drop the trigger
+DROP TRIGGER IF EXISTS trg_generate_employee_info ON "Zaposlenik";
+
+-- Drop the trigger function
+DROP FUNCTION IF EXISTS generate_employee_info();
+
+
 
 DROP TABLE IF EXISTS "Trošak";
 DROP TABLE IF EXISTS "WorkLog";

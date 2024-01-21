@@ -251,6 +251,56 @@ FOR EACH ROW
 EXECUTE FUNCTION update_registration_dates();
 
 
+-- Create the trigger function
+CREATE OR REPLACE FUNCTION generate_employee_info()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Generate an email from "Ime i prezime"
+    NEW."Email" := LOWER(REPLACE(TRANSLATE(NEW."Ime i prezime", ' ', '_'), 'ć', 'c') || '@example.com');
+    
+    -- Generate a random password
+    NEW."Lozinka" := MD5(random()::TEXT);
+
+    -- Set "Zaposlen" to the current date
+    NEW."Zaposlen" := CURRENT_DATE;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create the trigger
+CREATE TRIGGER trg_generate_employee_info
+BEFORE INSERT ON "Zaposlenik"
+FOR EACH ROW
+EXECUTE FUNCTION generate_employee_info();
+
+
+
+-- Create the trigger function
+CREATE OR REPLACE FUNCTION generate_employee_info()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Generate an email from "Ime i prezime"
+    NEW."Email" := LOWER(REPLACE(TRANSLATE(NEW."Ime i prezime", ' ', '.'), 'ć', 'c') || '@example.com');
+    
+    -- Generate a random password
+    NEW."Lozinka" := MD5(random()::TEXT);
+
+    -- Set "Zaposlen" to the current date
+    NEW."Zaposlen" := CURRENT_DATE;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create the trigger
+CREATE TRIGGER trg_generate_employee_info
+BEFORE INSERT ON "Zaposlenik"
+FOR EACH ROW
+EXECUTE FUNCTION generate_employee_info();
+
+
+
 
 
 
