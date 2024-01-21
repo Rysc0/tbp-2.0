@@ -1,15 +1,14 @@
 import psycopg2
-from psycopg2 import sql
 
-# Replace these values with your PostgreSQL connection details
-db_name = "your_new_database"
+
+db_name = "baza"
 user = "postgres"
 password = "psql"
-host = "localhost"  # usually "localhost" if running on the same machine
-port = 5432  # usually 5432
+host = "localhost"  
+port = 5432  
 
 # Path to your SQL script file
-sql_script_path = "/home/boris/tbp/create.sql"
+sql_script_path = "/home/rysco/tbp/db/create.sql"
 
 # Establish a connection to PostgreSQL in autocommit mode
 try:

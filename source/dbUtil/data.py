@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 def db_connect():
-    connection = db.connect(dbname="postgres", user="postgres", password="psql", host="localhost", port=5432)
+    connection = db.connect(dbname="baza", user="postgres", password="psql", host="localhost", port=5432)
     return connection
 
 
