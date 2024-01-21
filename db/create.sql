@@ -230,6 +230,28 @@ EXECUTE FUNCTION update_service_dates();
 
 
 
+-- Create the trigger function
+CREATE OR REPLACE FUNCTION update_registration_dates()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Check if "Vrijeme zadnje registracije" is today
+    IF NEW."Vrijeme zadnje registracije" <= CURRENT_DATE THEN
+        -- Update "Istek registracije" to be the same day in 1 year
+        NEW."Istek registracije" := CURRENT_DATE + INTERVAL '1 year';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create the trigger
+CREATE TRIGGER trg_update_registration_dates
+BEFORE INSERT OR UPDATE ON "Vozilo"
+FOR EACH ROW
+EXECUTE FUNCTION update_registration_dates();
+
+
+
 
 
 INSERT INTO "Radno mjesto" ("Radno mjesto") VALUES

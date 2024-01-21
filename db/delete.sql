@@ -25,7 +25,11 @@ DROP TRIGGER IF EXISTS trg_update_service_dates ON "Vozilo";
 -- Drop the trigger function
 DROP FUNCTION IF EXISTS update_service_dates();
 
+-- Drop the trigger
+DROP TRIGGER IF EXISTS trg_update_registration_dates ON "Vozilo";
 
+-- Drop the trigger function
+DROP FUNCTION IF EXISTS update_registration_dates();
 
 
 DROP TABLE IF EXISTS "Trošak";
