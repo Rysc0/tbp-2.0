@@ -9,7 +9,7 @@ class EvidencijaScreen:
         self.employee = employee
 
         # Create a Treeview widget
-        columns = ("ZaposlenikID", "Datum", "Status", "Vozilo", "Kilometraža", "Dnevnik", "Trošak", "ID")
+        columns = ("ZaposlenikID", "Datum", "Status", "Vozilo", "Kilometraža", "Dnevnik", "ID")
         self.tree = ttk.Treeview(self.root, columns=columns, show="headings")
 
         # Set column headings
@@ -21,7 +21,13 @@ class EvidencijaScreen:
         records = db.getWorkLogs(self.employee)
 
         
-        data = [tuple(records)]
+
+        if len(records) > 1:
+            data = []
+            for item in records:
+                data.append(item)
+        else:
+            data = [tuple(records)]
 
         
 
