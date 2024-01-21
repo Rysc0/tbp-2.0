@@ -164,6 +164,22 @@ EXECUTE FUNCTION update_vehicle_kilometers();
 
 
 
+CREATE OR REPLACE FUNCTION check_placa_constraints()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW."Netto" > NEW."Brutto" THEN
+        RAISE EXCEPTION 'Netto cannot be greater than Brutto.';
+    END IF;
+    -- Add more checks if needed
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_placa_constraints
+BEFORE INSERT OR UPDATE ON "Plaća"
+FOR EACH ROW
+EXECUTE FUNCTION check_placa_constraints();
+
 
 
 
