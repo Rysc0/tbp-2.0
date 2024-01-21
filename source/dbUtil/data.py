@@ -45,12 +45,22 @@ def db_insert(query):
     connect = db_connect()
     cursor = connect.cursor()
     cursor.execute(query)
-    newID = cursor.fetchone()[0]
 
+    if "UPDATE" not in query:
+        newID = cursor.fetchone()[0]
+
+        connect.commit()
+        db_close(connect)
+
+        return newID
+    
     connect.commit()
     db_close(connect)
-
-    return newID
+    return
+    
+    
+    
+   
   
 
 
@@ -202,3 +212,9 @@ def db_insertTrosak(trosak, worklogID):
 
     return new_id
 
+def changePassword(employeeID ,old, new):
+    query = '''UPDATE "Zaposlenik"
+SET "Lozinka" = '{}'
+WHERE "ID" = {} AND "Lozinka" = '{}';'''.format(new, employeeID, old)
+    db_insert(query)
+    return

@@ -190,7 +190,7 @@ class MainScreen:
     
     
     def on_change_password(self):
-        changePass = ChangePassScreen()
+        changePass = ChangePassScreen(employeeID=self.employee_data[0])
         changePass.root.mainloop()
         # messagebox.showinfo("Change pass", "Change pass clicked")
 

@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from dbUtil import data
+from dbUtil import data as db
 
 class ChangePassScreen:
-    def __init__(self):
+    def __init__(self, employeeID):
         self.root = tk.Tk()
         self.root.title("Change Password")
+        self.employeeID = employeeID
 
 
         # Entry for old password
@@ -38,6 +39,7 @@ class ChangePassScreen:
         # You can add your password change logic here, such as updating a database
 
         # Show a message box indicating successful password change
+        db.changePassword(self.employeeID, old=old_password, new=new_password)
         messagebox.showinfo("Password Change", "Password changed successfully!")
         self.root.destroy()
 
