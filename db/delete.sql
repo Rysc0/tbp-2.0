@@ -1,40 +1,27 @@
--- Drop the trigger
-DROP TRIGGER IF EXISTS trg_update_vehicle_kilometers ON "WorkLog";
 
--- Drop the trigger function
+DROP TRIGGER IF EXISTS trg_update_vehicle_kilometers ON "WorkLog";
 DROP FUNCTION IF EXISTS update_vehicle_kilometers();
 
--- Drop the trigger
-DROP TRIGGER IF EXISTS trg_check_placa_constraints ON "Plaća";
-
--- Drop the trigger function
-DROP FUNCTION IF EXISTS check_placa_constraints();
 
 
 
--- Drop the trigger
+
+
+
 DROP TRIGGER IF EXISTS trg_calculate_placa_fields ON "Plaća";
-
--- Drop the trigger function
 DROP FUNCTION IF EXISTS calculate_placa_fields();
 
 
--- Drop the trigger
-DROP TRIGGER IF EXISTS trg_update_service_dates ON "Vozilo";
 
--- Drop the trigger function
+DROP TRIGGER IF EXISTS trg_update_service_dates ON "Vozilo";
 DROP FUNCTION IF EXISTS update_service_dates();
 
--- Drop the trigger
-DROP TRIGGER IF EXISTS trg_update_registration_dates ON "Vozilo";
 
--- Drop the trigger function
+DROP TRIGGER IF EXISTS trg_update_registration_dates ON "Vozilo";
 DROP FUNCTION IF EXISTS update_registration_dates();
 
--- Drop the trigger
-DROP TRIGGER IF EXISTS trg_generate_employee_info ON "Zaposlenik";
 
--- Drop the trigger function
+DROP TRIGGER IF EXISTS trg_generate_employee_info ON "Zaposlenik";
 DROP FUNCTION IF EXISTS generate_employee_info();
 
 
