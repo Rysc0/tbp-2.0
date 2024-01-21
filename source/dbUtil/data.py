@@ -40,6 +40,17 @@ def db_fetch(query):
 
     return result
 
+def db_insert(query):
+    connect = db_connect()
+    cursor = connect.cursor()
+    cursor.execute(query)
+    newID = cursor.fetchone()[0]
+
+    connect.commit()
+    db_close(connect)
+
+    return newID
+  
 
 
 def convertToList(inputList, full = False):
@@ -155,12 +166,24 @@ WHERE "ZaposlenikID" = {};'''.format(employeeID)
     data = db_executeQuery(query, True)
     return data
 
-def createWorkLog(employeeID, employeeName, date, status, 
+def createWorkLog(employeeID, date, status, 
                   vehicle, kilometraza, dnevnik):
-    print("id")
-    id = ""
-    return id
+    query = '''INSERT INTO "WorkLog" ("ZaposlenikID", "Datum", "Status", "Vozilo", "Kilometraža", "Dnevnik") VALUES
+    ({}, '{}', {}, {}, {}, '{}') RETURNING "ID";'''.format(employeeID, date, status[0], vehicle[0] if vehicle is not None else 'NULL', kilometraza, dnevnik)
+    
+    new_id = db_insert(query)
+ 
+    return new_id
 
-def createTrosak(iznos, datum, opis, vrsta, worklogID):
-    return
+def db_insertTrosak(trosak, worklogID):
+    opis = trosak[2]
+    iznos = trosak[0]
+    datum = trosak[1]
+    vrsta = trosak[3][0]
+    query = '''INSERT INTO "Trošak" ("Opis", "Iznos", "Datum", "Vrsta", "WorkLogID") VALUES
+    ('{}', {}, '{}', {}, {}) RETURNING "ID";'''.format(opis, iznos, datum, vrsta, worklogID)
+    
+    new_id = db_insert(query)
+
+    return new_id
 

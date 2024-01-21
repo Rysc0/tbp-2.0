@@ -157,6 +157,7 @@ class MainScreen:
         self.ListaTroskovaLabel.grid(row=0, column=3)
         self.TrosakListBox = tk.Listbox(self.TrosakFrame, width=20, height=20)
         self.TrosakListBox.grid(row=1, column=3, rowspan=10)
+        self.TrosakListBox.bind("<<ListboxSelect>>", self.on_select_listbox)
 
         # ---------------------------------------------------------------------#
 
@@ -205,11 +206,58 @@ class MainScreen:
         djelatnici_screen.root.mainloop()
         # messagebox.showinfo("Klikno si")
 
+
+
     def on_dodajButton_click(self):
-        messagebox.showinfo("Klikno si")
+        
+        trosak = []
+        # iznos
+        iznos = self.IznosSpinBox.get()
+        
+        # datum
+        datum = self.Trcalendar.get_date()
+    
+        # opis
+        opis = self.OpisText.get('1.0','end-1c')
+        # vrsta
+        selected_vrsta = self.vrstaComboBox.get()
+        vrsta_id = data.getVrstaTroskaID(selected_vrsta)
+
+        trosak.append([iznos, datum, opis, vrsta_id])
+        
+        for item in trosak:
+            self.TrosakListBox.insert(self.TrosakListBox.size()+1, item)
+
+
+    def on_select_listbox(self, event):
+        selection = event.widget.curselection()
+
+        if selection:
+            index = selection[0]
+            data = event.widget.get(index)
+        
+        
+        print(index, data, self.createTrosak())
+
+
+        return index, data
+        
+   
 
     def on_ukloniButton_click(self):
-        messagebox.showinfo("Klikno si")
+        selected_trosak = self.TrosakListBox.curselection()
+        index = selected_trosak[0]
+        self.TrosakListBox.delete(index, index)
+
+
+    def createTrosak(self, worklogID):
+        items = self.TrosakListBox.get(first=0, last=self.TrosakListBox.size())
+        print("items: ", items)
+        for item in items:
+            id = data.db_insertTrosak(item, worklogID)
+            print("inserter trosak id: ", id)
+
+
 
     def on_upisiButton_click(self):
         # employeeID
@@ -233,28 +281,32 @@ class MainScreen:
         journal = self.Dnevnik.get('1.0','end-1c')
         # Trošak
 
-        # iznos
-        iznos = self.IznosSpinBox.get()
         
-        # datum
-        datum = self.Trcalendar.get_date()
-    
-        # opis
-        opis = self.OpisText.get('1.0','end-1c')
-        # vrsta
-        selected_vrsta = self.vrstaComboBox.get()
-        vrsta_id = data.getVrstaTroskaID(selected_vrsta)
         # troškovi
-        created_worklog_id = data.createWorkLog(employeeID=self.employee_data[0], employeeName=self.employee_data[1],
+        # TODO: Kreiranje troškova i worklog-a
+        created_worklog_id = data.createWorkLog(employeeID=self.employee_data[0],
                            date=selected_date, status=statusID, vehicle=vehicleID,
                            kilometraza=selected_distance, dnevnik=journal)
-        data.createTrosak(iznos=iznos, datum=datum, opis=opis, 
-                          vrsta=vrsta_id, worklogID=created_worklog_id)
+       
+        self.createTrosak(created_worklog_id)
+
+        messagebox.showinfo("Upisano")
+
+        # Obriši inpute nakon unosa
+        self.Distance.set(0)
+        self.Dnevnik.delete('1.0', 'end-1c')
+        self.statusComboBox.set('Odaberi')
+        self.VehicleEntry.set('Odaberi')
+
+        self.IznosSpinBox.set(0)
+        self.OpisText.delete('1.0','end-1c')
+        self.vrstaComboBox.set('Odaberi')
+        self.TrosakListBox.delete(0, self.TrosakListBox.size())
         return
 
     def on_evidencijaButton_click(self):
         evidencija_screen = EvidencijaScreen(self.employee_data[0])
         evidencija_screen.root.mainloop()
-        # messagebox.showinfo("Klikno si")
+        
 
 
