@@ -1,4 +1,5 @@
 import psycopg2 as db
+from datetime import datetime
 
 
 
@@ -152,6 +153,20 @@ def getIsplataForEmployee(employeeID):
     query = '''SELECT * FROM public."Isplata"
 WHERE "ZaposlenikID" = {};'''.format(employeeID)
     data = db_executeQuery(query, True)
+    return data
+
+def createIsplata(employeeID):
+    current_date_time = datetime.now()
+    placa_ID = getPayCheckForEmployee(employeeID)[0]
+    query = '''INSERT INTO "Isplata" ("ZaposlenikID", "Datum", "Plaća") VALUES
+    ({}, '{}', {}) RETURNING "ID";'''.format(employeeID, current_date_time, placa_ID)
+    data = db_insert(query)
+    return
+
+def getPayCheckForEmployee(employeeID):
+    query = '''SELECT "Plaća" FROM public."Isplata"
+WHERE "ZaposlenikID" = {};'''.format(employeeID)
+    data = db_executeQuery(query)
     return data
 
 def getPayCheck(paycheckID):

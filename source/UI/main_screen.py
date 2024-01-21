@@ -51,6 +51,9 @@ class MainScreen:
 
         self.djelatniciButton = tk.Button(self.EmployeeFrame, text="Djelatnici", command=self.on_djelatniciButton_click, height=1, width=15)
         self.djelatniciButton.grid(row=8, column=0, padx=10, pady=5, sticky="w")
+
+        self.IsplatiButton = tk.Button(self.EmployeeFrame, text="Isplati", command=self.on_isplatiButton_click, height=1, width=15)
+        self.IsplatiButton.grid(row=9, column=0, padx=10, pady=5, sticky="w")
         # ---------------------------------------------------------------------#
 
         self.WorkLogLabelFrame = tk.LabelFrame(self.root, border=5, relief=tk.RIDGE, text='WorkLog')
@@ -204,7 +207,12 @@ class MainScreen:
     def on_djelatniciButton_click(self):
         djelatnici_screen = DjelatniciScreen()
         djelatnici_screen.root.mainloop()
-        # messagebox.showinfo("Klikno si")
+
+
+    def on_isplatiButton_click(self):
+        data.createIsplata(employeeID=self.employee_data[0])
+        messagebox.showinfo("Isplaćeno")
+
 
 
 
