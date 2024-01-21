@@ -141,6 +141,41 @@ CREATE TABLE IF NOT EXISTS public."Trošak"
 );
 
 
+
+
+
+CREATE OR REPLACE FUNCTION update_vehicle_kilometers()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Fetch the corresponding vehicle ID from the WorkLog table
+    -- and update the Kilometraža in the Vozilo table.
+    UPDATE "Vozilo"
+    SET "Kilometraža" = "Vozilo"."Kilometraža" + NEW."Kilometraža"
+    WHERE "ID" = NEW."Vozilo";
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_update_vehicle_kilometers
+AFTER INSERT ON "WorkLog"
+FOR EACH ROW
+EXECUTE FUNCTION update_vehicle_kilometers();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO "Radno mjesto" ("Radno mjesto") VALUES
     ('Administrator'),
     ('Programmer'),
