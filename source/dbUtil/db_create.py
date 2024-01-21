@@ -9,8 +9,6 @@ host = "localhost"
 port = "5432"  
 
 
-path = "/home/rysco/tbp/db/create.sql"
-
 # Establish a connection to PostgreSQL
 try:
     connection = psycopg2.connect(
