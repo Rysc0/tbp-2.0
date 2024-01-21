@@ -19,6 +19,14 @@ DROP TRIGGER IF EXISTS trg_calculate_placa_fields ON "Plaća";
 DROP FUNCTION IF EXISTS calculate_placa_fields();
 
 
+-- Drop the trigger
+DROP TRIGGER IF EXISTS trg_update_service_dates ON "Vozilo";
+
+-- Drop the trigger function
+DROP FUNCTION IF EXISTS update_service_dates();
+
+
+
 
 DROP TABLE IF EXISTS "Trošak";
 DROP TABLE IF EXISTS "WorkLog";

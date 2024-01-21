@@ -204,6 +204,28 @@ EXECUTE FUNCTION calculate_placa_fields();
 
 
 
+-- Create the trigger function
+CREATE OR REPLACE FUNCTION update_service_dates()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Check if "Vrijeme idućeg servisa" has reached the given date
+    IF NEW."Vrijeme idućeg servisa" <= CURRENT_DATE THEN
+        -- Update "Vrijeme zadnjeg servisa" to the current value of "Vrijeme idućeg servisa"
+        NEW."Vrijeme zadnjeg servisa" := NEW."Vrijeme idućeg servisa";
+        
+        -- Update "Vrijeme idućeg servisa" to be the same day in 3 months time
+        NEW."Vrijeme idućeg servisa" := NEW."Vrijeme idućeg servisa" + INTERVAL '3 months';
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create the trigger
+CREATE TRIGGER trg_update_service_dates
+BEFORE INSERT OR UPDATE ON "Vozilo"
+FOR EACH ROW
+EXECUTE FUNCTION update_service_dates();
 
 
 
