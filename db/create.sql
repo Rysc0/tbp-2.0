@@ -183,6 +183,24 @@ EXECUTE FUNCTION check_placa_constraints();
 
 
 
+CREATE OR REPLACE FUNCTION calculate_placa_fields()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Calculate Brutto, Zdravstveno, Mirovinsko, and Total
+    NEW."Brutto" := ROUND((NEW."Netto" / 0.69)::numeric, 2);
+    NEW."Zdravstveno" := ROUND((NEW."Brutto" * 0.16)::numeric, 2);
+    NEW."Mirovinsko" := ROUND((NEW."Brutto" * 0.15)::numeric, 2);
+    NEW."Total" := ROUND((NEW."Brutto" + COALESCE(NEW."Putni trošak", 0))::numeric, 2);
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_calculate_placa_fields
+BEFORE INSERT ON "Plaća"
+FOR EACH ROW
+EXECUTE FUNCTION calculate_placa_fields();
+
 
 
 

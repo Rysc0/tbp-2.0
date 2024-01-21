@@ -9,7 +9,7 @@ host = "localhost"  # usually "localhost" if running on the same machine
 port = 5432  # usually 5432
 
 # Path to your SQL script file
-sql_script_path = "path_to_script"
+sql_script_path = "/home/boris/tbp/create.sql"
 
 # Establish a connection to PostgreSQL in autocommit mode
 try:

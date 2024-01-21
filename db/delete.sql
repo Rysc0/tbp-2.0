@@ -10,6 +10,16 @@ DROP TRIGGER IF EXISTS trg_check_placa_constraints ON "Plaća";
 -- Drop the trigger function
 DROP FUNCTION IF EXISTS check_placa_constraints();
 
+
+
+-- Drop the trigger
+DROP TRIGGER IF EXISTS trg_calculate_placa_fields ON "Plaća";
+
+-- Drop the trigger function
+DROP FUNCTION IF EXISTS calculate_placa_fields();
+
+
+
 DROP TABLE IF EXISTS "Trošak";
 DROP TABLE IF EXISTS "WorkLog";
 DROP TABLE IF EXISTS "Isplata";

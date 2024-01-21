@@ -9,7 +9,7 @@ host = "localhost"  # usually "localhost" if running on the same machine
 port = "5432"  # usually 5432
 
 
-path = "path_to_script"
+path = "/home/boris/tbp/db/create.sql"
 
 # Establish a connection to PostgreSQL
 try:
