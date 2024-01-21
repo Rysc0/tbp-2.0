@@ -19,14 +19,22 @@ class IsplateScreen:
 
         # Insert sample data into the table
         record = db.getIsplataForEmployee(self.employeeID)
-        ime = db.db_getEmployeesData(ID=record[1])
-        record[1] = ime[1]
+        ime = db.db_getEmployeesData(ID=self.employeeID)
+        for item in record:
+            item[1] = ime[1]
+        # record[1] = ime[1]
 
         # get placa
-        paycheck = db.getPayCheck(record[3])
-        record[3] = paycheck[1]
+        if len(record) > 1:
+            paycheck = db.getPayCheck(record[0][3])
+            for item in record:
+                item[3] = paycheck[1]
+            data = [tuple(x) for x in record]
+        else:
+            paycheck = db.getPayCheck(record[3])
+            record[3] = paycheck[1]
 
-        data = [tuple(record)]
+            data = [tuple(record)]
 
         for item in data:
             self.tree.insert("", "end", values=item)
